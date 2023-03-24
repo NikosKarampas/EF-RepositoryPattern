@@ -14,7 +14,7 @@ namespace RepositoryPattern
             using (var unitOfWork = new UnitOfWork(new PlutoContext()))
             {
                 // Example1
-                var course = unitOfWork.Courses.Get(4);
+                var course = unitOfWork.Courses.Get(1);
 
                 // Example2
                 var courses = unitOfWork.Courses.GetCoursesWithAuthors(1, 4);
