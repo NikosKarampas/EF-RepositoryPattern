@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 
 namespace RepositoryPattern.Core.Repositories
 {
-    public interface IRepository<TEntity> where TEntity : class
+    public interface IRepository<TEntity> where TEntity : class, new()
     {
         TEntity Get(int id);
         IEnumerable<TEntity> GetAll();
