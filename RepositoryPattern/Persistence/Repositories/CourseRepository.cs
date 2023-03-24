@@ -8,19 +8,22 @@ namespace RepositoryPattern.Persistence.Repositories
 {
     public class CourseRepository : Repository<Course>, ICourseRepository
     {
+        private readonly PlutoContext _context;
+
         public CourseRepository(PlutoContext context) 
             : base(context)
         {
+            this._context = context;
         }
 
         public IEnumerable<Course> GetTopSellingCourses(int count)
         {
-            return PlutoContext.Courses.OrderByDescending(c => c.FullPrice).Take(count).ToList();
+            return _context.Courses.OrderByDescending(c => c.FullPrice).Take(count).ToList();
         }
 
         public IEnumerable<Course> GetCoursesWithAuthors(int pageIndex, int pageSize = 10)
         {
-            return PlutoContext.Courses
+            return _context.Courses
                 .Include(c => c.Author)
                 .OrderBy(c => c.Name)
                 .Skip((pageIndex - 1) * pageSize)
@@ -28,9 +31,10 @@ namespace RepositoryPattern.Persistence.Repositories
                 .ToList();
         }
 
-        public PlutoContext PlutoContext
-        {
-            get { return Context as PlutoContext; }
-        }
+        //Alternative without context injection
+        //public PlutoContext PlutoContext
+        //{
+        //    get { return Context as PlutoContext; }
+        //}
     }
 }
